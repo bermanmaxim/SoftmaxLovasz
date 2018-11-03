@@ -213,14 +213,17 @@ def xloss(logits, labels, ignore=None):
 
 
 # --------------------------- HELPER FUNCTIONS ---------------------------
-
+def isnan(x):
+    return x != x
+    
+    
 def mean(l, ignore_nan=True, empty=0):
     """
     nanmean compatible with generators.
     """
     l = iter(l)
     if ignore_nan:
-        l = ifilterfalse(torch.isnan, l)
+        l = ifilterfalse(isnan, l)
     try:
         n = 1
         acc = next(l)
