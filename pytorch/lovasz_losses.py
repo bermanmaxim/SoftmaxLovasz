@@ -220,7 +220,7 @@ def mean(l, ignore_nan=True, empty=0):
     """
     l = iter(l)
     if ignore_nan:
-        l = ifilterfalse(np.isnan, l)
+        l = ifilterfalse(torch.isnan, l)
     try:
         n = 1
         acc = next(l)
