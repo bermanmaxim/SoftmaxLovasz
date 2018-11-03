@@ -174,6 +174,9 @@ def lovasz_softmax_flat(probas, labels, only_present=False):
       labels: [P] Tensor, ground truth labels (between 0 and C - 1)
       only_present: average only on classes present in ground truth
     """
+    if len(probas) == 0:  # if labels are all ignored
+        return np.nan
+    
     C = probas.size(1)
     losses = []
     for c in range(C):
@@ -211,7 +214,7 @@ def xloss(logits, labels, ignore=None):
 
 # --------------------------- HELPER FUNCTIONS ---------------------------
 
-def mean(l, ignore_nan=False, empty=0):
+def mean(l, ignore_nan=True, empty=0):
     """
     nanmean compatible with generators.
     """
