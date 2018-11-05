@@ -174,8 +174,10 @@ def lovasz_softmax_flat(probas, labels, only_present=False):
       labels: [P] Tensor, ground truth labels (between 0 and C - 1)
       only_present: average only on classes present in ground truth
     """
-    if len(probas) == 0:  # if labels are all ignored
-        return np.nan
+    if probas.numel() == 0:
+        # only void pixels, the gradients should be 0
+        return probas * 0.
+    C = probas.size(1)
     
     C = probas.size(1)
     losses = []
